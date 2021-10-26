@@ -2,6 +2,7 @@ import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import React, { useState, useEffect, useRef } from "react";
 import { Text, View, Button, Platform } from "react-native";
+import { TextInput } from "react-native-gesture-handler";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -14,6 +15,7 @@ Notifications.setNotificationHandler({
 function FloatingButton() {
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
+  const [personName, setPersonName] = useState("");
   const notificationListener = useRef();
   const responseListener = useRef();
 
@@ -27,6 +29,7 @@ function FloatingButton() {
         setNotification(notification);
         console.log("2");
         console.log(notification);
+        console.log(expoPushToken)
       });
     console.log("1");
     responseListener.current =
@@ -52,36 +55,39 @@ function FloatingButton() {
         backgroundColor: "white",
       }}
     >
-      <Text>Your expo push token: {expoPushToken}</Text>
       <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <Text>
-          Title: {notification && notification.request.content.title}{" "}
-        </Text>
-        <Text>Body: {notification && notification.request.content.body}</Text>
-        <Text>
-          Data:{" "}
-          {notification && JSON.stringify(notification.request.content.data)}
-        </Text>
+        <TextInput
+          style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+          onChangeText={(text) => setPersonName(text)}
+          value={personName}
+        />
       </View>
       <Button
         title="Press to schedule a notification"
         onPress={async () => {
-          await schedulePushNotification();
+          console.log("Button Pressed")
+          await schedulePushNotification(personName);
         }}
       />
     </View>
   );
 }
 
-async function schedulePushNotification() {
+async function schedulePushNotification(personName) {
   await Notifications.scheduleNotificationAsync({
     content: {
       title: "BIRTHDAY REMINDER",
-      body: "Today is _____'s Birthday",
+      body: "Today is " + personName + "'s Birthday",
       data: { data: "1234" },
       sound: true,
     },
-    trigger: { seconds: 2 },
+    trigger: {
+      day: 27,
+      month: 9,
+      hour: 1,
+      minute: 14,
+      repeats: true
+    }
   });
 }
 
@@ -116,3 +122,4 @@ async function registerForPushNotificationsAsync() {
 }
 
 export default FloatingButton;
+
