@@ -2,8 +2,8 @@ import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import { Octicons } from "@expo/vector-icons";
 import { FontAwesome } from '@expo/vector-icons';
+import { StyleSheet } from "react-native";
 
 import HomeScreen from "../screens/Home";
 import ProfileScreen from "../screens/Profile";
@@ -36,7 +36,7 @@ export default function Header() {
               <FontAwesome
                 name="circle"
                 size={34}
-                color="white"
+                color="grey"
                 style={{ paddingRight: "4%", paddingRight: "2%" }}
                 onPress={() => props.navigation.navigate("Profile")}
               />

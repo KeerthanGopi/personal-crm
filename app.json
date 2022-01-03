@@ -28,6 +28,21 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+      "androidNavigationBar": {
+ 
+    "visible": "leanback",
+
+    "barStyle": "dark-content",
+
+    "backgroundColor": "#000000"
+  },
+    "androidStatusBar": {
+
+    "hidden": false,
+
+    "barStyle": "light-content",
+    "backgroundColor": "#000000"
+  },
     "plugins": [
       [
       "expo-notifications",
